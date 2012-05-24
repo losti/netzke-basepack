@@ -207,7 +207,8 @@ module Netzke
         if a[:setter]
           a[:setter].call(self, v)
         elsif respond_to?("#{a[:name]}=")
-          send("#{a[:name]}=", v)
+          #send("#{a[:name]}=", v)
+          send("#{a[:name]}=", v.blank? ? nil : v)
         elsif is_association_attr?(a)
           split = a[:name].to_s.split(/\.|__/)
           if a[:nested_attribute]

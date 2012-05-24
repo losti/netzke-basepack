@@ -6,7 +6,7 @@ module Netzke::Basepack::DataAdapters
 
     def get_records(params, columns=[])
       # build initial relation based on passed params
-      relation = get_relation(params)
+      relation = get_relation(params, generate_table_aliases(columns))
 
       # addressing the n+1 query problem
       columns.each do |c|
@@ -43,7 +43,7 @@ module Netzke::Basepack::DataAdapters
 
     def count_records(params, columns=[])
       # build initial relation based on passed params
-      relation = get_relation(params)
+      relation = get_relation(params, generate_table_aliases(columns))
 
       # addressing the n+1 query problem
       columns.each do |c|
@@ -133,6 +133,30 @@ module Netzke::Basepack::DataAdapters
       @model_class.find_all_by_id(id).first
     end
 
+    def generate_table_aliases(columns)
+      lv_assoc = Hash.new
+      columns.each do |ct|
+        assoc, method = ct[:name].split('__')
+        if method
+          lv_table = @model_class.reflect_on_association(assoc.to_sym).klass.table_name
+          #table keresĂ©se hashben
+          if !(lv_as = lv_assoc.fetch(lv_table,false))
+            lv_assoc[lv_table] = lv_as = Hash.new
+          end
+          #egyĂ©bkĂ©nt assoc keresĂ©se hashben, ha nincs benne, akkor belerakjuk
+          if !lv_as.include?(assoc)
+            #itt rakjuk bele as assoc nevet
+            lv_as[assoc] = case lv_as.length
+               when 0 then lv_table
+               when 1 then assoc.pluralize+"_"+@model_class.table_name
+               else assoc.pluralize+"_"+@model_class.table_name+"_"+lv_as.length.to_s
+            end
+          end
+        end
+      end
+      lv_assoc
+    end
+    
     # Build a hash of foreign keys and the associated model
     def hash_fk_model
       foreign_keys = {}
@@ -164,12 +188,12 @@ module Netzke::Basepack::DataAdapters
 
 
     # An ActiveRecord::Relation instance encapsulating all the necessary conditions.
-    def get_relation(params = {})
+    def get_relation(params = {}, alias_hash)
       @arel = @model_class.arel_table
 
       relation = @model_class.scoped
 
-      relation = apply_column_filters(relation, params[:filter]) if params[:filter]
+      relation = apply_column_filters(relation, params[:filter], alias_hash) if params[:filter]
 
       if params[:extra_conditions]
         extra_conditions = normalize_extra_conditions(ActiveSupport::JSON.decode(params[:extra_conditions]))
@@ -227,8 +251,9 @@ module Netzke::Basepack::DataAdapters
       column_filter.each do |v|
         assoc, method = v["field"].split('__')
         if method
-          assoc = @model_class.reflect_on_association(assoc.to_sym)
-          field = [assoc.klass.table_name, method].join('.').to_sym
+          #assoc = @model_class.reflect_on_association(assoc.to_sym)
+          #field = [assoc.klass.table_name, method].join('.').to_sym
+          field = [alias_hash.fetch(@model_class.reflect_on_association(assoc.to_sym).klass.table_name).fetch(assoc), method].join('.').to_sym rescue "error"
         else
           field = assoc.to_sym
         end
