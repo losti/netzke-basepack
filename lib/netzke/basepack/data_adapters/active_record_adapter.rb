@@ -242,7 +242,7 @@ module Netzke::Basepack::DataAdapters
     # This will result in:
     #
     #      relation.where(["id > ?", 10]).where(["food_name like ?", "%pizza%"])
-    def apply_column_filters(relation, column_filter)
+    def apply_column_filters(relation, column_filter, alias_hash)
       res = relation
       operator_map = {"lt" => "<", "gt" => ">", "eq" => "="}
 
