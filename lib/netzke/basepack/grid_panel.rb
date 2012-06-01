@@ -354,12 +354,11 @@ module Netzke
 
       component :add_form do
         form_config = {
-          :class_name => "Netzke::Basepack::FormPanel",
+          :class_name => "Netzke::Basepack::GridPanel::RecordFormForm",
           :model => config[:model],
           :persistent_config => config[:persistent_config],
           :strong_default_attrs => config[:strong_default_attrs],
           :border => true,
-          :bbar => false,
           :prevent_header => true,
           :mode => config[:mode],
           :record => data_class.new(columns_default_values)
@@ -379,10 +378,9 @@ module Netzke
 
       component :edit_form do
           form_config = {
-            :class_name => "Netzke::Basepack::FormPanel",
+            :class_name => "Netzke::Basepack::GridPanel::RecordFormForm",
             :model => config[:model],
             :persistent_config => config[:persistent_config],
-            :bbar => false,
             :prevent_header => true,
             :mode => config[:mode]
             # :record_id gets assigned by deliver_component dynamically, at the moment of loading

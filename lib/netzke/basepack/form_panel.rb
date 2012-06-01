@@ -46,7 +46,7 @@ module Netzke
       action :apply do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.apply'),
-          :tooltip => I18n.t('netzke.basepack.form_panel.actions.apply_tooltip'),
+          :tooltip => '',
           :icon => :tick
         }
       end
@@ -54,7 +54,7 @@ module Netzke
       action :addnew do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.addnew'),
-          :tooltip => I18n.t('netzke.basepack.form_panel.actions.addnew_tooltip'),
+          :tooltip => '',
           :icon => :tick
         }
       end
@@ -62,7 +62,7 @@ module Netzke
       action :edit do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.edit'),
-          :tooltip => I18n.t('netzke.basepack.form_panel.actions.edit_tooltip'),
+          :tooltip => '',
           :icon => :pencil
         }
       end
@@ -70,6 +70,7 @@ module Netzke
       action :cancel do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.cancel'),
+          :tooltip => '',
           :icon => :cross
         }
       end

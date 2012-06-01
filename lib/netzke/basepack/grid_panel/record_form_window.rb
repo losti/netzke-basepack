@@ -7,7 +7,7 @@ module Netzke
                       :width => 400,
                       :auto_height => true,
                       :modal => true,
-                      :fbar => [:ok.action, :cancel.action]
+                      :fbar => false
 
         action :ok do
           { :text => I18n.t('netzke.basepack.grid_panel.record_form_window.actions.ok')}
@@ -21,18 +21,6 @@ module Netzke
           function(params){
             this.callParent();
             this.items.first().on("submitsuccess", function(){ this.closeRes = "ok"; this.close(); }, this);
-          }
-        JS
-
-        js_method :on_ok, <<-JS
-          function(params){
-            this.items.first().onApply();
-          }
-        JS
-
-        js_method :on_cancel, <<-JS
-          function(params){
-            this.close();
           }
         JS
       end
