@@ -98,11 +98,13 @@ module Netzke
       def configure_bbar(c)
         c[:bbar] = [:cancel.action,'->'] if c[:bbar].nil? && !c[:read_only]
         #if we are editing a record, the action will be apply
-        if c[:record_id] != nil || (c[:record] != nil && c[:record].id != nil) || (@record && @record.id != nil)
-          c[:bbar] << :okclear.action
-        #else the action will be addnew
-        else
-          c[:bbar] << :addnew.action
+        if c[:bbar]
+          if c[:record_id] != nil || (c[:record] != nil && c[:record].id != nil) || (@record && @record.id != nil)
+            c[:bbar] << :okclear.action
+          #else the action will be addnew
+          else
+            c[:bbar] << :addnew.action
+          end
         end
       end
 
