@@ -51,6 +51,14 @@ module Netzke
         }
       end
 
+      action :addnew do
+        {
+          :text => I18n.t('netzke.basepack.form_panel.actions.addnew'),
+          :tooltip => I18n.t('netzke.basepack.form_panel.actions.addnew_tooltip'),
+          :icon => :tick
+        }
+      end
+
       action :edit do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.edit'),
@@ -62,8 +70,15 @@ module Netzke
       action :cancel do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.cancel'),
-          :tooltip => I18n.t('netzke.basepack.form_panel.actions.cancel_tooltip'),
-          :icon => :cancel
+          :icon => :cross
+        }
+      end
+
+      #this is the default close button if nothing is changed in edit mode
+      action :okclear do
+        {
+          :text => I18n.t('netzke.basepack.form_panel.actions.okclear'),
+          :icon => :tick
         }
       end
 
@@ -81,7 +96,14 @@ module Netzke
       end
 
       def configure_bbar(c)
-        c[:bbar] = [:apply.action] if c[:bbar].nil? && !c[:read_only]
+        c[:bbar] = [:cancel.action,'->'] if c[:bbar].nil? && !c[:read_only]
+        #if we are editing a record, the action will be apply
+        if c[:record_id] != nil || (c[:record] != nil && c[:record].id != nil) || (@record && @record.id != nil)
+          c[:bbar] << :okclear.action
+        #else the action will be addnew
+        else
+          c[:bbar] << :addnew.action
+        end
       end
 
       # Extra JavaScripts and stylesheets
