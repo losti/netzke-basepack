@@ -292,7 +292,7 @@ module Netzke
       action :add do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.add'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.add'),
+          :tooltip => '',
           :disabled => config[:prohibit_create],
           :handler => "onAddInline", # not following naming conventions here as Ext 4 grid has its own onAdd method
           :icon => :add
@@ -302,7 +302,7 @@ module Netzke
       action :edit do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.edit'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.edit'),
+          :tooltip => '',
           :disabled => true,
           :icon => :table_edit
         }
@@ -311,7 +311,7 @@ module Netzke
       action :del do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.del'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.del'),
+          :tooltip => '',
           :disabled => true,
           :icon => :table_row_delete
         }
@@ -320,7 +320,7 @@ module Netzke
       action :apply do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.apply'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.apply'),
+          :tooltip => '',
           :disabled => config[:prohibit_update] && config[:prohibit_create],
           :icon => :tick
         }
@@ -329,7 +329,7 @@ module Netzke
       action :add_in_form do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.add_in_form'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.add_in_form'),
+          :tooltip => '',
           :icon => :application_form_add
         }
       end
@@ -337,7 +337,7 @@ module Netzke
       action :edit_in_form do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.edit_in_form'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.edit_in_form'),
+          :tooltip => '',
           :disabled => true,
           :icon => :application_form_edit
         }
@@ -346,7 +346,7 @@ module Netzke
       action :search do
         {
           :text => I18n.t('netzke.basepack.grid_panel.actions.search'),
-          :tooltip => I18n.t('netzke.basepack.grid_panel.actions.search'),
+          :tooltip => '',
           :enable_toggle => true,
           :icon => :find
         }
