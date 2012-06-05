@@ -34,7 +34,7 @@ module Netzke
               record_ids = ActiveSupport::JSON.decode(params[:records])
               data_adapter.destroy(record_ids)
               on_data_changed
-              {:netzke_feedback => I18n.t('netzke.basepack.grid_panel.deleted_n_records', :n => record_ids.size), :load_store_data => get_data}
+              {:netzke_feedback => I18n.t('netzke.basepack.grid_panel.deleted_n_records', :n => record_ids.size)}
             else
               {:netzke_feedback => I18n.t('netzke.basepack.grid_panel.cannot_delete')}
             end
