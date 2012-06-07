@@ -16,7 +16,7 @@ In your Gemfile:
 
 For the "edge" stuff, tell bundler to get the gem straight from GitHub:
 
-    gem 'netzke-basepack', :git => "git://github.com/skozlov/netzke-basepack.git"
+    gem 'netzke-basepack', :git => "git://github.com/nomadcoder/netzke-basepack.git"
 
 ## Usage
 
