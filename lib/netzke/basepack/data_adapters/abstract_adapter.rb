@@ -130,6 +130,10 @@ module Netzke::Basepack::DataAdapters
       @model_class.find(id)
     end
 
+    def find_all_record(ids)
+      @model_class.find(ids)
+    end
+
     # Build a hash of foreign keys and the associated model
     def hash_fk_model
       raise NotImplementedError

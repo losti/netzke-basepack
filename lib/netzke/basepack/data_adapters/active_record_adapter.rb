@@ -133,6 +133,10 @@ module Netzke::Basepack::DataAdapters
       @model_class.find_all_by_id(id).first
     end
 
+    def find_all_record(ids)
+      @model_class.find(ids)
+    end
+
     def generate_table_aliases(columns)
       lv_assoc = Hash.new
       columns.each do |ct|
