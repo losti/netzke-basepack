@@ -28,7 +28,8 @@ module Netzke::Basepack::DataAdapters
             relation.order("#{assoc} #{dir}")
           else
             assoc = @model_class.reflect_on_association(assoc.to_sym)
-            relation.joins(assoc.name).order("#{assoc.klass.table_name}.#{method} #{dir}")
+            #relation.joins(assoc.name).order("#{assoc.klass.table_name}.#{method} #{dir}")
+            relation.joins("LEFT OUTER JOIN #{assoc.klass.table_name} ON #{assoc.klass.table_name}.id = #{@model_class.table_name}.#{assoc.foreign_key}").order("#{assoc.klass.table_name}.#{method} #{dir}")
           end
         end
       end
