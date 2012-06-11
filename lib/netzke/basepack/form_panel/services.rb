@@ -101,10 +101,11 @@ module Netzke
           # Creates/updates a record from hash
           def create_or_update_record(hsh)
             hsh.merge!(config[:strong_default_attrs]) if config[:strong_default_attrs]
-            @record ||= data_adapter.find_record hsh.delete(data_class.primary_key.to_s) # only pick up the record specified in the params if it was not provided in the configuration
+            @record ||= data_adapter.find_record hsh.fetch(data_class.primary_key.to_s,nil) # only pick up the record specified in the params if it was not provided in the configuration
               #data_class.find(:first, :conditions => {data_class.primary_key => hsh.delete(data_class.primary_key)}) 
             success = true
 
+            hsh.delete(data_class.primary_key.to_s) if @record
             @record = data_class.new if @record.nil?
 
             hsh.each_pair do |k,v|
