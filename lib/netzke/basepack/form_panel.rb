@@ -79,6 +79,7 @@ module Netzke
       action :okclear do
         {
           :text => I18n.t('netzke.basepack.form_panel.actions.okclear'),
+          :tooltip => '',
           :icon => :tick
         }
       end
