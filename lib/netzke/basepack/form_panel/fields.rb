@@ -98,6 +98,7 @@ module Netzke
             set_default_field_label(field)
             set_default_field_xtype(field) if field[:xtype].nil?
             set_default_read_only(field)
+            field[:cls] = field[:cls] ? "#{field[:cls]} readonly" : "readonly" if field[:read_only]
 
             # temporal datetime setup, while we don't have real datetime field
             if field[:attr_type] == :date
