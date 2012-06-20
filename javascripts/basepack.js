@@ -22,6 +22,7 @@ Ext.apply(Ext.History, new Ext.util.Observable());
 Ext.define('Ext.netzke.ComboBox', {
   extend        : 'Ext.form.field.ComboBox',
   alias         : 'widget.netzkeremotecombo',
+  editable      : false,
   valueField    : 'field1',
   displayField  : 'field2',
   triggerAction : 'all',
@@ -52,6 +53,12 @@ Ext.define('Ext.netzke.ComboBox', {
     store.on('beforeload', function(self, params) {
       params.params.column = this.name;
     },this);
+    //prevent collapse after store load
+    if (this.preventFirstCollapse) {
+        store.on('load', function(store, records, suc, op, eOpts) {
+          this.prevCollapse = true;
+        },this);
+    }
 
     // If inline data was passed (TODO: is this actually working?)
     if (this.store) store.loadData({data: this.store});
@@ -63,7 +70,11 @@ Ext.define('Ext.netzke.ComboBox', {
 
   collapse: function(){
     // HACK: do not hide dropdown menu while loading items
-    if( !this.store.loading ) this.callParent();
+    if( !this.prevCollapse) {
+        this.callParent();
+    } else {
+        this.prevCollapse = false;
+    }
   }
 });
 
