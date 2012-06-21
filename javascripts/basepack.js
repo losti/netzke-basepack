@@ -49,6 +49,10 @@ Ext.define('Ext.netzke.ComboBox', {
       }
     });
 
+    //we want to autoexpand on focus, since we are not editable
+    this.on('focus', function() {
+       this.onTriggerClick();
+    },this);
     // TODO: find a cleaner way to pass this.name to the server
     store.on('beforeload', function(self, params) {
       params.params.column = this.name;
