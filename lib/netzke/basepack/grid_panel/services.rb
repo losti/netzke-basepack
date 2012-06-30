@@ -36,7 +36,8 @@ module Netzke
               on_data_changed
               {:netzke_feedback => I18n.t('netzke.basepack.grid_panel.deleted_n_records', :n => record_ids.size)}
             else
-              {:netzke_feedback => I18n.t('netzke.basepack.grid_panel.cannot_delete')}
+              flash :error => I18n.t('netzke.basepack.grid_panel.cannot_delete')
+              {:netzke_feedback => @flash}
             end
           end
 
