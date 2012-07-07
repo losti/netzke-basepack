@@ -34,7 +34,7 @@ Ext.define('Ext.ux.form.field.DateTime', {
      * This value is overridden if format is specified in the timeConfig.
      * The default is 'H:i:s'
      */
-    timeFormat: 'H:i:s',
+    timeFormat: 'H:i',
 //    /**
 //     * @cfg {String} dateTimeFormat
 //     * The format used when submitting the combined value.
@@ -50,7 +50,7 @@ Ext.define('Ext.ux.form.field.DateTime', {
      * @cfg {Object} timeConfig
      * Additional config options for the time field.
      */
-    timeConfig:{},
+    timeConfig:{submitFormat: 'H:i:s'},
 
 
     // properties
