@@ -106,7 +106,7 @@ module Netzke
             end
 
             # provide our special combobox with our id
-            field[:parent_id] = self.global_id if field[:xtype] == :netzkeremotecombo
+            field[:parent_id] = self.global_id# if field[:xtype] == :netzkeremotecombo
 
             field[:hidden] = field[:hide_label] = true if field[:hidden].nil? && primary_key_attr?(field)
 
