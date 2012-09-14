@@ -51,10 +51,12 @@ Ext.define('Ext.netzke.ComboBox', {
 
     //we want to autoexpand on focus, since we are not editable
     this.on('focus', function() {
-       this.onTriggerClick();
+      //if (this.readOnly) return false;
+      this.onTriggerClick();
     },this);
     // TODO: find a cleaner way to pass this.name to the server
     store.on('beforeload', function(self, params) {
+      //if (this.readOnly) return false;
       params.params.column = this.name;
     },this);
     //prevent collapse after store load
@@ -150,7 +152,7 @@ Ext.override( Ext.form.field.Checkbox, {
 });
 
 /* We were missing the 'load' event on proxy, implementing it ourselves */
-Ext.override(Ext.data.proxy.Server, {
+/*Ext.override(Ext.data.proxy.Server, {
   constructor: function() {
     this.addEvents('load');
     this.callOverridden([arguments]);
@@ -160,4 +162,4 @@ Ext.override(Ext.data.proxy.Server, {
     this.callOverridden(arguments);
     this.fireEvent('load', this, response, operation);
   }
-});
+});*/
