@@ -27,6 +27,11 @@ module Netzke::Basepack::DataAdapters
       @model_class.first
     end
 
+    # gets the model_class
+    def model_class
+      @model_class
+    end
+    
     # Returns record count based on passed params. Implements:
     # * filtering
     # * scopes
