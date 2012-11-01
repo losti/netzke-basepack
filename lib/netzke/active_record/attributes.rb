@@ -232,7 +232,8 @@ module Netzke
                     # what should we do in this case?
                   end
                 else
-                  self.send("#{assoc.options[:foreign_key] || assoc.name.to_s.foreign_key}=", v)
+                  #self.send("#{assoc.options[:foreign_key] || assoc.name.to_s.foreign_key}=", v)
+                  self.send("#{assoc.options[:foreign_key] || assoc.name.to_s.foreign_key}=", v.to_i < 0 ? nil : v)
                 end
               else
                 logger.debug "Netzke::Basepack: Association #{assoc} is not known for class #{self.class.name}"

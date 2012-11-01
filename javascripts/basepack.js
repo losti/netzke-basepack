@@ -66,6 +66,14 @@ Ext.define('Ext.netzke.ComboBox', {
         },this);
     }
 
+    // insert a selectable "blank line" which allows to remove the associated record
+    if (this.blankLine) {
+      store.on('load', function(self, params) {
+        // append a selectable "empty line" which will allow remove the association
+        self.insert(0,Ext.create(modelName, {field1: -1, field2: this.blankLine}));
+      }, this);
+    }
+
     // If inline data was passed (TODO: is this actually working?)
     if (this.store) store.loadData({data: this.store});
 
