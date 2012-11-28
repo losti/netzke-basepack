@@ -193,7 +193,7 @@ module Netzke::Basepack::DataAdapters
 
 
     # An ActiveRecord::Relation instance encapsulating all the necessary conditions.
-    def get_relation(params = {}, alias_hash)
+    def get_relation(params = {}, alias_hash = {})
       @arel = @model_class.arel_table
 
       relation = @model_class.scoped
