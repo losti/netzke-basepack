@@ -202,6 +202,7 @@ module Netzke
 
       # Assigns new value to an (association) attribute
       def set_value_for_attribute(a, v)
+        return if a[:just_to_show] #ebben az esetben nincs update, mert csak mutatjuk az értéket
         v = v.to_time_in_current_zone if v.is_a?(Date) # convert Date to Time
 
         if a[:setter]
