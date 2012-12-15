@@ -8,6 +8,8 @@ module Netzke::Basepack::DataAdapters
       # build initial relation based on passed params
       relation = get_relation(params, generate_table_aliases(columns))
 
+      relation = relation.where(params[:extrafilter]) if params[:extrafilter]
+
       # addressing the n+1 query problem
       columns.each do |c|
         assoc, method = c[:name].split('__')
