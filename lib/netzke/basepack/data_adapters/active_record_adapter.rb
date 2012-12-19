@@ -8,8 +8,6 @@ module Netzke::Basepack::DataAdapters
       # build initial relation based on passed params
       relation = get_relation(params, generate_table_aliases(columns))
 
-      relation = relation.where(params[:extrafilter]) if params[:extrafilter]
-
       # addressing the n+1 query problem
       columns.each do |c|
         assoc, method = c[:name].split('__')
@@ -33,6 +31,17 @@ module Netzke::Basepack::DataAdapters
             #relation.joins(assoc.name).order("#{assoc.klass.table_name}.#{method} #{dir}")
             relation.joins("LEFT OUTER JOIN #{assoc.klass.table_name} ON #{assoc.klass.table_name}.id = #{@model_class.table_name}.#{assoc.foreign_key}").order("#{assoc.klass.table_name}.#{method} #{dir}")
           end
+        end
+      #else we use the default_sort (if we have)
+      elsif params[:default_sort] && sort_params = params[:default_sort].first
+        assoc, method = sort_params["property"].split('__')
+        dir = sort_params["direction"].downcase
+        column = columns.detect { |c| c[:name] == sort_params["property"] }
+        relation = if method.nil?
+          relation.order("#{assoc} #{dir}")
+        else
+          assoc = @model_class.reflect_on_association(assoc.to_sym)
+          relation.joins("LEFT OUTER JOIN #{assoc.klass.table_name} ON #{assoc.klass.table_name}.id = #{@model_class.table_name}.#{assoc.foreign_key}").order("#{assoc.klass.table_name}.#{method} #{dir}")
         end
       end
 
