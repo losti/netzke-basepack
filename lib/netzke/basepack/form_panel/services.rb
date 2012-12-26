@@ -27,7 +27,7 @@ module Netzke
             query = params[:query]
 
             field = fields[params[:column].to_sym]
-            scope = field.to_options[:scope]
+            scope = params[:scope] || field.to_options[:scope]
             query = params[:query]
             {:data => combobox_options_for_column(field, :query => query, :scope => scope, :record_id => params[:id])}
           end
