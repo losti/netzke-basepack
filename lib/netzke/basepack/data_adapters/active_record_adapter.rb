@@ -280,7 +280,14 @@ module Netzke::Basepack::DataAdapters
 
         case v["type"]
         when "string"
-          res = res.where(["#{field} ilike ?", "%#{value}%"])
+          # string is splited
+          if !value.blank?
+            value.split(" ").each do |v|
+              res = res.where(["#{field} like ?", "%#{v}%"]) if !v.blank?
+            end
+          else
+            res = res.where(["#{field} like ?", "%#{value}%"])
+          end
         when "date"
           # convert value to the DB date
           value.match /(\d\d)\/(\d\d)\/(\d\d\d\d)/
