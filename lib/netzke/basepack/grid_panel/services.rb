@@ -25,6 +25,7 @@ module Netzke
             {
               :update_new_records => mod_records[:create],
               :update_mod_records => mod_records[:update] || {},
+              #:on_refresh => {},
               :netzke_feedback => @flash
             }
           end
