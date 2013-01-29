@@ -45,6 +45,8 @@ module Netzke::Basepack::DataAdapters
         end
       end
 
+      relation = relation.order(params[:after_sort]) if params[:after_sort]
+
       page = params[:limit] ? params[:start].to_i/params[:limit].to_i + 1 : 1
       if params[:limit]
         relation.offset(params[:start]).limit(params[:limit])

@@ -172,6 +172,7 @@ module Netzke
 
             params[:limit] = config[:rows_per_page] if config[:enable_pagination]
             params[:scope] = config[:scope] # note, params[:scope] becomes ActiveSupport::HashWithIndifferentAccess
+            params[:after_sort] = config[:after_sort]
             params[:default_sort] = config[:default_sort]
 
             data_adapter.get_records(params, columns)
