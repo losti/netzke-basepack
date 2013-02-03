@@ -91,14 +91,14 @@ module Netzke
       end
 
       # Html required for Ext.History to work
-      def js_component_html
-        super << %Q{
-  <form id="history-form" class="x-hidden">
-      <input type="hidden" id="x-history-field" />
-      <iframe id="x-history-frame"></iframe>
-  </form>
-        }
-      end
+#      def js_component_html
+#        super << %Q{
+#  <form id="history-form" class="x-hidden">
+#      <input type="hidden" id="x-history-field" />
+#      <iframe id="x-history-frame"></iframe>
+#  </form>
+        #}
+#      end
     end
   end
 end

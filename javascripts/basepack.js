@@ -2,7 +2,7 @@ Ext.ns("Netzke.pre");
 Ext.ns("Netzke.pre.Basepack");
 Ext.ns("Ext.ux.grid");
 
-Ext.apply(Ext.History, new Ext.util.Observable());
+//Ext.apply(Ext.History, new Ext.util.Observable());
 
 // A convenient passfield
 // Ext.netzke.PassField = Ext.extend(Ext.form.TextField, {
