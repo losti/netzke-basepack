@@ -25,7 +25,8 @@ module Netzke::Basepack::DataAdapters
           relation = relation.send(column[:sorting_scope].to_sym, dir.to_sym)
         else
           relation = if method.nil?
-            relation.order("#{assoc} #{dir}")
+            relation.order("#{@model_class.table_name}.#{assoc} #{dir}")
+            #relation.order("#{assoc} #{dir}")
           else
             assoc = @model_class.reflect_on_association(assoc.to_sym)
             #relation.joins(assoc.name).order("#{assoc.klass.table_name}.#{method} #{dir}")
@@ -273,7 +274,7 @@ module Netzke::Basepack::DataAdapters
           #field = [assoc.klass.table_name, method].join('.').to_sym
           field = [alias_hash.fetch(@model_class.reflect_on_association(assoc.to_sym).klass.table_name).fetch(assoc), method].join('.').to_sym rescue "error"
         else
-          field = assoc.to_sym
+          field = "#{@model_class.table_name}.#{assoc.to_s}"
         end
 
         value = v["value"]
