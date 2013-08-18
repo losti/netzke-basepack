@@ -14,6 +14,30 @@ module Netzke::Basepack::DataAdapters
         relation = relation.includes(assoc.to_sym) if method
       end
 
+      relation = apply_sort(relation, params, columns)
+
+      page = params[:limit] ? params[:start].to_i/params[:limit].to_i + 1 : 1
+      if params[:limit]
+        relation.offset(params[:start]).limit(params[:limit])
+      else
+        relation.all
+      end
+    end
+
+    def count_records(params, columns=[])
+      # build initial relation based on passed params
+      relation = get_relation(params, generate_table_aliases(columns))
+
+      # addressing the n+1 query problem
+      columns.each do |c|
+        assoc, method = c[:name].split('__')
+        relation = relation.includes(assoc.to_sym) if method
+      end
+
+      relation.count
+    end
+
+    def apply_sort(relation, params, columns=[])
       # apply sorting if needed
       if params[:sort] && sort_params = params[:sort].first
         assoc, method = sort_params["property"].split('__')
@@ -47,26 +71,7 @@ module Netzke::Basepack::DataAdapters
       end
 
       relation = relation.order(params[:after_sort]) if params[:after_sort]
-
-      page = params[:limit] ? params[:start].to_i/params[:limit].to_i + 1 : 1
-      if params[:limit]
-        relation.offset(params[:start]).limit(params[:limit])
-      else
-        relation.all
-      end
-    end
-
-    def count_records(params, columns=[])
-      # build initial relation based on passed params
-      relation = get_relation(params, generate_table_aliases(columns))
-
-      # addressing the n+1 query problem
-      columns.each do |c|
-        assoc, method = c[:name].split('__')
-        relation = relation.includes(assoc.to_sym) if method
-      end
-
-      relation.count
+      relation
     end
 
     def get_assoc_property_type assoc_name, prop_name
