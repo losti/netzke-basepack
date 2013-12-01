@@ -301,7 +301,9 @@ module Netzke::Basepack::DataAdapters
           value.match /(\d\d)\/(\d\d)\/(\d\d\d\d)/
           res = res.where("#{field} #{op} ?", "#{$3}-#{$1}-#{$2}")
         when "numeric"
-          res = res.where(["#{field} #{op} ?", value])
+          res = res.where(["#{field} #{op} ?", value.to_d])
+        when "int"
+          res = res.where(["#{field} #{op} ?", value.to_i])
         else
           res = res.where(["#{field} = ?", value])
         end
