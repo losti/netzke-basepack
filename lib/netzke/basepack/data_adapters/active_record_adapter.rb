@@ -304,6 +304,8 @@ module Netzke::Basepack::DataAdapters
           res = res.where(["#{field} #{op} ?", value.to_d])
         when "int"
           res = res.where(["#{field} #{op} ?", value.to_i])
+        when "boolean"
+          res = (value.to_i == 1) ? res.where("#{field} IS TRUE") : res.where("#{field} IS NOT TRUE")
         else
           res = res.where(["#{field} = ?", value])
         end
