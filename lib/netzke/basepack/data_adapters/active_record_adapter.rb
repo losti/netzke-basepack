@@ -308,7 +308,7 @@ module Netzke::Basepack::DataAdapters
           #res = res.where("#{field} #{op} ?", "#{$3}-#{$1}-#{$2}")
           val = value.to_date rescue nil
           if val
-            res = res.where("#{field} > ? AND #{field} < ?", val.to_datetime, val.to_datetime + 1.day)
+            res = res.where("#{field} > ? AND #{field} < ?", val.to_datetime.in_time_zone(Time.zone), (val.to_datetime + 1.day).in_time_zone(Time.zone))
           end
         when "numeric"
           res = res.where(["#{field} #{op} ?", value.to_d])
