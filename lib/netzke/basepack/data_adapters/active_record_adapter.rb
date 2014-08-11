@@ -304,8 +304,12 @@ module Netzke::Basepack::DataAdapters
           end
         when "date"
           # convert value to the DB date
-          value.match /(\d\d)\/(\d\d)\/(\d\d\d\d)/
-          res = res.where("#{field} #{op} ?", "#{$3}-#{$1}-#{$2}")
+          #value.match /(\d\d)\/(\d\d)\/(\d\d\d\d)/
+          #res = res.where("#{field} #{op} ?", "#{$3}-#{$1}-#{$2}")
+          val = value.to_date rescue nil
+          if val
+            res = res.where("#{field} > ? AND #{field} < ?", val.to_datetime, val.to_datetime + 1.day)
+          end
         when "numeric"
           res = res.where(["#{field} #{op} ?", value.to_d])
         when "int"
