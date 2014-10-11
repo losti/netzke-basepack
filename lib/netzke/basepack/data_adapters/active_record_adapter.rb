@@ -302,13 +302,15 @@ module Netzke::Basepack::DataAdapters
           else
             res = res.where(["#{field} like ?", "%#{value}%"])
           end
-        when "date"
-          # convert value to the DB date
-          #value.match /(\d\d)\/(\d\d)\/(\d\d\d\d)/
-          #res = res.where("#{field} #{op} ?", "#{$3}-#{$1}-#{$2}")
+        when "datetime"
           val = Time.zone.parse(value) rescue nil
           if val
             res = res.where("#{field} > ? AND #{field} < ?", val.to_datetime, val.to_datetime + 1.day)
+          end
+        when "date"
+          val = value.to_date rescue nil
+          if val
+            res = res.where("#{field} #{op} ?", val)
           end
         when "numeric"
           res = res.where(["#{field} #{op} ?", value.to_d])
